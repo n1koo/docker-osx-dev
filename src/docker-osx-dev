@@ -342,6 +342,11 @@ function check_for_shared_folders {
   fi
 }
 
+function create_symlink_to_persist_data {
+  log_info "Create link for /Users"
+  $DOCKER_HOST_SSH_COMMAND sudo ln -s /mnt/sda1/Users /Users
+}
+
 #
 # Returns true iff the Boot2Docker VM is initialized
 #
@@ -367,6 +372,7 @@ function init_boot2docker {
   fi
 
   check_for_shared_folders
+  create_symlink_to_persist_data
 
   if ! is_boot2docker_running; then
     log_info "Starting Boot2Docker VM"
