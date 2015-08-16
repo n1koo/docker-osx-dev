@@ -371,15 +371,15 @@ function init_boot2docker {
     boot2docker init
   fi
 
-  check_for_shared_folders
-  create_symlink_to_persist_data
-
   if ! is_boot2docker_running; then
     log_info "Starting Boot2Docker VM"
     boot2docker start --vbox-share=disable
   fi
 
   configure_boot2docker
+
+  check_for_shared_folders
+  create_symlink_to_persist_data
 }
 
 ################################################################################
@@ -626,7 +626,7 @@ function install_dependencies {
   brew_install "caskroom/cask/brew-cask" "Cask" "" false
   brew_install "boot2docker" "Boot2Docker" "boot2docker" false
   brew_install "docker-compose" "Docker Compose" "docker-compose" false
-  brew_install "docker-machine" "Docker Machine" "docker-machine" false
+ # brew_install "docker-machine" "Docker Machine" "docker-machine" false
   brew_install "fswatch" "fswatch" "fswatch" false
   brew_install "coreutils" "GNU core utilities" "greadlink" false
 }
