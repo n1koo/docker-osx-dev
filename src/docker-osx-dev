@@ -344,7 +344,7 @@ function check_for_shared_folders {
 
 function create_symlink_to_persist_data {
   log_info "Create link for /Users"
-  $DOCKER_HOST_SSH_COMMAND sudo ln -s /mnt/sda1/Users /Users
+  $DOCKER_HOST_SSH_COMMAND sudo ln -s /mnt/sda1/Users /Users || true
 }
 
 #
