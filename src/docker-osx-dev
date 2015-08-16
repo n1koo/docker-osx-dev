@@ -537,15 +537,16 @@ function determine_boot2docker_exports_for_env_file {
 #
 function add_docker_host {
   if grep -q "^[^#]*$DOCKER_HOST_NAME" "$HOSTS_FILE" ; then
-    log_warn "$HOSTS_FILE already contains $DOCKER_HOST_NAME, will not overwrite"
-  else
-    DOCKER_HOST_IP=${DOCKER_HOST_IP-$(boot2docker ip)}
-    local readonly host_entry="\n$DOCKER_HOST_IP $DOCKER_HOST_NAME"
-
-    log_info "Adding $DOCKER_HOST_NAME entry to $HOSTS_FILE so you can use http://$DOCKER_HOST_NAME URLs for testing"
-    log_instructions "Modifying $HOSTS_FILE requires sudo privileges, please enter your password."
-    sudo -k sh -c "echo \"$host_entry\" >> $HOSTS_FILE"
+    log_warn "$HOSTS_FILE already contains $DOCKER_HOST_NAME, wil remove it"
+    sudo sed -i.bu '/dockerhost/d' /etc/hosts
   fi
+
+  DOCKER_HOST_IP=${DOCKER_HOST_IP-$(boot2docker ip)}
+  local readonly host_entry="\n$DOCKER_HOST_IP $DOCKER_HOST_NAME"
+
+  log_info "Adding $DOCKER_HOST_NAME entry to $HOSTS_FILE so you can use http://$DOCKER_HOST_NAME URLs for testing"
+  log_instructions "Modifying $HOSTS_FILE requires sudo privileges, please enter your password."
+  sudo -k sh -c "echo \"$host_entry\" >> $HOSTS_FILE"
 }
 
 ################################################################################
