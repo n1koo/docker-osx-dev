@@ -437,7 +437,7 @@ function init_docker_host {
 function install_rsync_on_docker_host {
   log_info "Installing rsync in the Docker Host image"
 
-  $DOCKER_HOST_SSH_COMMAND "if ! type rsync > /dev/null 2>&1; then tce-load -wi rsync; fi"
+  $DOCKER_HOST_SSH_COMMAND "if ! type rsync > /dev/null 2>&1; then tce-load -wi rsync || true; fi"
 }
 
 
